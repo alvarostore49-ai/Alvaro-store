@@ -1,0 +1,1 @@
+Sube esta carpeta a GitHub Pages. Agrega imágenes en /images.
