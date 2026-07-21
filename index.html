@@ -109,7 +109,7 @@
                     <p class="text-xs text-gray-500 tracking-widest mb-1">${p.code}</p>
                     <h3 class="font-bold text-white text-lg mb-1">${p.name}</h3>
                     <p class="font-bold text-xl mb-3" style="color:#d4af37">${p.price}</p>
-                    <button onclick="buyProduct('${p.code}')" class="btn-premium w-full py-3 rounded-lg text-black font-bold text-sm">Comprar</button>
+                    <button onclick="buyProduct('${p.code}','${p.name}','${p.price}')" class="btn-premium w-full py-3 rounded-lg text-black font-bold text-sm">Comprar</button>
                 </div>
             `;
             list.appendChild(card);
