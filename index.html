@@ -1,124 +1,505 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
- <head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260721-01-d99ca90"}');</script><script src="/_sdk/f432b76fb310b513.telemetry_sdk.js" integrity="sha512-9FJQ55EKmmqhyyik8BhrMVfm0+iYYfb8uOlRsjtkxJMEI97qOVEI4PnHohDjQAtvAep0IOEpdQ64eki0sz62ug=="></script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Álvaro Store</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-  <style>
-        * { font-family: 'Raleway', sans-serif; }
-        .screen { position: fixed; inset: 0; width: 100%; height: calc(100 * min(var(--vh, 1vh), 1vh)); overflow: hidden; transition: opacity 0.4s, transform 0.4s; }
-        .screen.hidden { opacity: 0; pointer-events: none; transform: scale(0.95); }
-        .screen.visible { opacity: 1; pointer-events: auto; transform: scale(1); }
-        .gold-gradient { background: linear-gradient(135deg, #d4af37, #f5e6a3, #d4af37); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .btn-premium { background: linear-gradient(135deg, #d4af37, #b8960c); transition: all 0.3s; box-shadow: 0 4px 20px rgba(212,175,55,0.3); }
-        .btn-premium:active { transform: scale(0.95); box-shadow: 0 2px 10px rgba(212,175,55,0.2); }
-        .btn-dark { background: #1a1a1a; border: 1px solid #333; transition: all 0.3s; }
-        .btn-dark:active { transform: scale(0.95); background: #2a2a2a; }
-        .catalog-scroll { overflow-y: auto; -webkit-overflow-scrolling: touch; }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes pulse-gold { 0%, 100% { text-shadow: 0 0 10px rgba(212,175,55,0.5); } 50% { text-shadow: 0 0 30px rgba(212,175,55,0.8); } }
-        .animate-in { animation: fadeUp 0.6s ease forwards; }
-        .logo-glow { animation: pulse-gold 3s infinite; }
-        .product-card { background: #111; border: 1px solid #222; border-radius: 16px; overflow: hidden; transition: transform 0.3s; }
-        .product-card:active { transform: scale(0.97); }
-    </style>
-  <script src="/_sdk/e3937a0574eb2d69.data_sdk.js" type="text/javascript" integrity="sha512-xbp/ACqEQy1aDxYMtXTrR3y5MUbzxuggRR/9sD48Gl4VhLMMCiAHsxMaFV6DTdeBpR6ymF+t2zhPKYkWM3+Jfw=="></script>
-  <script src="/_sdk/9432170dbd2ae0df.resizing_sdk.js" type="text/javascript" integrity="sha512-FeT+58sb1f9ejWPWFjCbJvTT+SDwGV+ngrHUnlO7TWEOoqwOLj6p256kO3vOL7DIWl1cIgrobiof8v2bOigwPg=="></script>
- </head>
- <body data-template-id="__page-root" class="bg-black text-white overflow-hidden"><!-- INTRO SCREEN -->
-  <div id="screen-intro" class="screen visible flex flex-col items-center justify-center bg-black">
-   <div class="text-center animate-in">
-    <h1 data-template-id="intro-logo" class="canva-text text-4xl font-black tracking-widest gold-gradient logo-glow mb-4">ÁLVARO STORE</h1>
-    <p data-template-id="intro-tagline" class="canva-text text-sm text-gray-400 tracking-[0.3em] uppercase mb-16">Moda urbana • Segunda mano</p>
-   </div><button data-template-id="intro-enter-btn" class="canva-button btn-premium text-black font-bold text-lg px-10 py-4 rounded-full animate-in" style="animation-delay:0.8s;opacity:0" onclick="showScreen('screen-menu')">Entrar a la tienda</button>
-  </div><!-- MAIN MENU -->
-  <div id="screen-menu" class="screen hidden flex flex-col items-center justify-center bg-black px-6">
-   <h1 data-template-id="menu-logo" class="canva-text text-3xl font-black tracking-widest gold-gradient logo-glow mb-12">ÁLVARO STORE</h1>
-   <div class="flex flex-col gap-4 w-full max-w-xs"><button data-template-id="menu-btn-tienda" class="canva-button btn-dark text-white font-semibold text-lg py-4 rounded-xl w-full" onclick="showScreen('screen-tienda')">🛍️ Ver tienda</button> <button data-template-id="menu-btn-about" class="canva-button btn-dark text-white font-semibold text-lg py-4 rounded-xl w-full" onclick="showScreen('screen-about')">👤 Quiénes somos</button> <button data-template-id="menu-btn-social" class="canva-button btn-dark text-white font-semibold text-lg py-4 rounded-xl w-full" onclick="showScreen('screen-social')">📱 Redes sociales</button>
-   </div>
-  </div><!-- TIENDA -->
-  <div id="screen-tienda" class="screen hidden flex flex-col bg-black">
-   <header class="flex items-center p-4 border-b border-gray-800 shrink-0"><button class="text-gold mr-3" onclick="showScreen('screen-menu')"><i data-lucide="arrow-left" style="color:#d4af37"></i></button>
-    <h2 class="text-xl font-bold gold-gradient">Catálogo</h2>
-   </header>
-   <div class="catalog-scroll flex-1 p-4 space-y-5" id="product-list"><!-- Products generated by JS from DOM -->
-   </div>
-  </div><!-- ABOUT -->
-  <div id="screen-about" class="screen hidden flex flex-col bg-black">
-   <header class="flex items-center p-4 border-b border-gray-800 shrink-0"><button class="mr-3" onclick="showScreen('screen-menu')"><i data-lucide="arrow-left" style="color:#d4af37"></i></button>
-    <h2 class="text-xl font-bold gold-gradient">Quiénes somos</h2>
-   </header>
-   <div class="flex-1 overflow-y-auto p-6">
-    <p class="text-gray-300 leading-relaxed text-base">Somos un equipo de jóvenes que busca formar un negocio estable ofreciendo prendas urbanas de segunda mano en excelente estado, con buena calidad y precios accesibles.</p>
-   </div>
-  </div><!-- SOCIAL -->
-  <div id="screen-social" class="screen hidden flex flex-col bg-black">
-   <header class="flex items-center p-4 border-b border-gray-800 shrink-0"><button class="mr-3" onclick="showScreen('screen-menu')"><i data-lucide="arrow-left" style="color:#d4af37"></i></button>
-    <h2 class="text-xl font-bold gold-gradient">Síguenos</h2>
-   </header>
-   <div class="flex-1 flex flex-col items-center justify-center gap-4 px-6"><a href="https://www.instagram.com/alvaro_storesjd?igsh=aHhwaGY2bHY5dDNl" target="_blank" rel="noopener noreferrer" data-template-id="social-instagram" class="canva-button btn-dark text-white font-semibold py-4 rounded-xl w-full max-w-xs text-center block">📸 Instagram</a> <a href="https://www.facebook.com/profile.php?id=61584816317669" target="_blank" rel="noopener noreferrer" data-template-id="social-facebook" class="canva-button btn-dark text-white font-semibold py-4 rounded-xl w-full max-w-xs text-center block">👍 Facebook</a> <a href="https://www.tiktok.com/@sjd_926?_r=1&amp;_t=ZS-98CyDlg9Mrl" target="_blank" rel="noopener noreferrer" data-template-id="social-tiktok" class="canva-button btn-dark text-white font-semibold py-4 rounded-xl w-full max-w-xs text-center block">🎵 TikTok</a> <a href="https://chat.whatsapp.com/DKahgHt4ZyhLgpIcMVVA5L?s=cl&amp;p=a&amp;ilr=0" target="_blank" rel="noopener noreferrer" data-template-id="social-whatsapp" class="canva-button btn-premium text-black font-bold py-4 rounded-xl w-full max-w-xs text-center block">💬 Comunidad WhatsApp</a>
-   </div>
-  </div><!-- Product cards (bound) -->
-  <template id="product-template">
-   <div class="product-card"><img class="w-full aspect-[3/4] object-cover" loading="lazy">
-    <div class="p-4">
-     <p class="text-xs text-gray-500 tracking-widest mb-1"></p>
-     <h3 class="font-bold text-white text-lg mb-1"></h3>
-     <p class="text-gold font-bold text-xl mb-3" style="color:#d4af37"></p><button class="btn-premium w-full py-3 rounded-lg text-black font-bold text-sm">Comprar</button>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Álvaro Store</title>
+<meta name="description" content="Álvaro Store — Streetwear de segunda mano en excelente estado.">
+<meta name="theme-color" content="#0a0a0a">
+
+<!-- Tipografías: Bebas Neue (display, estilo urbano/poster) + Inter (texto) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  /* =========================================================
+     1. VARIABLES / TOKENS DE DISEÑO
+     Negro profundo + dorado "latón antiguo" (no dorado neón),
+     evitando el look genérico. Tipografía condensada de poster
+     para el display y una humanista limpia para el cuerpo.
+  ========================================================= */
+  :root{
+    --bg:            #0a0a0a;
+    --bg-panel:      #131313;
+    --bg-panel-2:    #1b1b1b;
+    --line:          #2a2a2a;
+    --gold:          #c9a227;      /* dorado principal, tono latón */
+    --gold-bright:   #e8c468;      /* dorado claro para hover/brillo */
+    --gold-dim:      #8a6f22;
+    --white:         #f5f3ec;
+    --gray:          #9a9690;
+    --gray-dim:      #6b6862;
+    --danger:        #d94b3f;
+    --radius:        14px;
+    --ease:          cubic-bezier(.22,.68,0,1);
+    --ff-display:    'Bebas Neue', 'Arial Narrow', sans-serif;
+    --ff-body:       'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+  html,body{ height:100%; }
+  body{
+    background:var(--bg);
+    color:var(--white);
+    font-family:var(--ff-body);
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+    /* Sensación de app: evita el "rebote" del navegador y el scroll horizontal */
+    overscroll-behavior-y:none;
+  }
+  ::selection{ background:var(--gold); color:#0a0a0a; }
+
+  /* Barra de estado / notch safe-area */
+  .safe-top{ padding-top:env(safe-area-inset-top); }
+  .safe-bottom{ padding-bottom:env(safe-area-inset-bottom); }
+
+  img{ max-width:100%; display:block; }
+  button{ font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; }
+  a{ color:inherit; text-decoration:none; }
+
+  /* Textura de grano sutil, da carácter "sello" premium */
+  .grain{
+    pointer-events:none;
+    position:fixed; inset:0; z-index:2;
+    opacity:.045; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* =========================================================
+     2. PANTALLAS (SPA sin recarga)
+  ========================================================= */
+  .screen{
+    position:fixed; inset:0;
+    display:flex; flex-direction:column;
+    opacity:0; visibility:hidden;
+    transform:translateY(14px) scale(.99);
+    transition:opacity .55s var(--ease), transform .55s var(--ease), visibility .55s;
+    z-index:5;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .screen.active{
+    opacity:1; visibility:visible; transform:translateY(0) scale(1);
+    z-index:10;
+  }
+
+  /* ---------- 2.1 SPLASH / VIDEO ---------- */
+  #splash{
+    background:#000;
+    z-index:100;
+    align-items:center; justify-content:center;
+    transition:opacity .7s var(--ease), visibility .7s;
+  }
+  #splash video{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    background:#000;
+  }
+  #splash .splash-logo{
+    position:relative; z-index:2;
+    font-family:var(--ff-display);
+    letter-spacing:.14em;
+    font-size:clamp(20px,6vw,30px);
+    color:var(--gold);
+    opacity:.9;
+    animation:pulseFade 2.2s ease-in-out infinite;
+  }
+  @keyframes pulseFade{ 0%,100%{opacity:.5} 50%{opacity:1} }
+
+  /* ---------- 2.2 TOP BAR común a las pantallas internas ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:20;
+    display:flex; align-items:center; gap:14px;
+    padding:calc(env(safe-area-inset-top) + 16px) 20px 14px;
+    background:linear-gradient(180deg, rgba(10,10,10,.97) 70%, rgba(10,10,10,0));
+    backdrop-filter:blur(6px);
+  }
+  .back-btn{
+    width:38px; height:38px; border-radius:50%;
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--gold); font-size:18px;
+    transition:.25s var(--ease);
+    flex-shrink:0;
+  }
+  .back-btn:active{ transform:scale(.9); background:var(--bg-panel-2); }
+  .topbar-title{
+    font-family:var(--ff-display);
+    letter-spacing:.06em;
+    font-size:20px;
+    color:var(--white);
+  }
+
+  /* =========================================================
+     3. MENÚ PRINCIPAL
+  ========================================================= */
+  #menu{ align-items:center; justify-content:center; padding:40px 24px; }
+  .menu-inner{
+    width:100%; max-width:420px;
+    display:flex; flex-direction:column; align-items:center;
+    gap:52px;
+  }
+  .brand{
+    text-align:center;
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+  }
+  .brand .mark{
+    width:64px; height:64px; border-radius:50%;
+    border:1.5px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--ff-display); font-size:26px; color:var(--gold);
+    position:relative;
+    box-shadow:0 0 0 6px rgba(201,162,39,.06);
+  }
+  .brand .mark::after{
+    content:'';
+    position:absolute; inset:-9px;
+    border:1px solid rgba(201,162,39,.25);
+    border-radius:50%;
+  }
+  .brand h1{
+    font-family:var(--ff-display);
+    font-size:clamp(38px,11vw,58px);
+    letter-spacing:.08em;
+    line-height:1;
+    background:linear-gradient(135deg,var(--gold-bright),var(--gold) 55%,var(--gold-dim));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .brand .sub{
+    font-size:11px; letter-spacing:.32em; text-transform:uppercase;
+    color:var(--gray-dim); font-weight:600;
+  }
+
+  .menu-nav{ width:100%; display:flex; flex-direction:column; gap:14px; }
+  .menu-btn{
+    width:100%;
+    display:flex; align-items:center; gap:14px;
+    padding:18px 20px;
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    text-align:left;
+    transition:transform .3s var(--ease), border-color .3s var(--ease), background .3s var(--ease);
+  }
+  .menu-btn .ic{ font-size:22px; flex-shrink:0; }
+  .menu-btn .txt{ display:flex; flex-direction:column; gap:2px; flex:1; }
+  .menu-btn .txt strong{ font-size:16px; font-weight:700; letter-spacing:.01em; }
+  .menu-btn .txt span{ font-size:12px; color:var(--gray-dim); }
+  .menu-btn .arrow{ color:var(--gold); font-size:18px; transition:transform .3s var(--ease); }
+  .menu-btn:active{ transform:scale(.97); background:var(--bg-panel-2); }
+  .menu-btn:hover{ border-color:var(--gold-dim); }
+  .menu-btn:hover .arrow{ transform:translateX(4px); }
+
+  .menu-foot{ font-size:11px; color:var(--gray-dim); letter-spacing:.05em; text-align:center; }
+
+  /* =========================================================
+     4. TIENDA / CATÁLOGO
+  ========================================================= */
+  #shop .content{ padding:6px 18px 60px; }
+  .shop-intro{ padding:4px 2px 18px; }
+  .shop-intro p{ color:var(--gray); font-size:13px; line-height:1.5; }
+  .filter-row{
+    display:flex; gap:8px; overflow-x:auto; padding-bottom:16px;
+    scrollbar-width:none;
+  }
+  .filter-row::-webkit-scrollbar{ display:none; }
+  .chip{
+    flex-shrink:0;
+    padding:8px 16px; border-radius:100px;
+    border:1px solid var(--line); font-size:12.5px; font-weight:600;
+    color:var(--gray); background:var(--bg-panel);
+    transition:.25s var(--ease);
+  }
+  .chip.active{ background:var(--gold); color:#0a0a0a; border-color:var(--gold); }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+  }
+  @media(min-width:640px){ .grid{ grid-template-columns:repeat(3,1fr); } }
+  @media(min-width:980px){ .grid{ grid-template-columns:repeat(4,1fr); } }
+
+  /* --- Elemento distintivo: la tarjeta de producto como "etiqueta de ropa" (hang tag),
+         con ojal perforado y borde punteado tipo hilo, referenciando el mundo real
+         de la ropa de segunda mano/streetwear. --- */
+  .tag-card{
+    position:relative;
+    background:var(--bg-panel);
+    border:1px dashed rgba(201,162,39,.35);
+    border-radius:10px;
+    padding:14px 12px 14px;
+    display:flex; flex-direction:column; gap:10px;
+    opacity:0; transform:translateY(16px);
+    animation:cardIn .6s var(--ease) forwards;
+  }
+  @keyframes cardIn{ to{ opacity:1; transform:translateY(0); } }
+
+  .tag-hole{
+    position:absolute; top:10px; left:10px;
+    width:14px; height:14px; border-radius:50%;
+    background:var(--bg);
+    border:1px solid rgba(201,162,39,.4);
+  }
+  .tag-hole::after{
+    content:''; position:absolute; inset:3px; border-radius:50%; background:#000;
+  }
+
+  .tag-img{
+    width:100%; aspect-ratio:1/1;
+    border-radius:8px; overflow:hidden;
+    background:#0f0f0f;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .tag-img img{ width:100%; height:100%; object-fit:cover; transition:transform .5s var(--ease); }
+  .tag-card:hover .tag-img img{ transform:scale(1.06); }
+
+  .tag-code{
+    position:absolute; top:10px; right:10px;
+    font-family:var(--ff-display);
+    font-size:11px; letter-spacing:.08em;
+    color:#0a0a0a; background:var(--gold);
+    padding:3px 8px; border-radius:5px;
+  }
+
+  .tag-body{ display:flex; flex-direction:column; gap:4px; padding:0 2px; }
+  .tag-name{ font-size:14px; font-weight:700; line-height:1.25; }
+  .tag-meta{ display:flex; align-items:center; justify-content:space-between; }
+  .tag-state{ font-size:11px; color:var(--gray-dim); font-weight:600; }
+  .tag-price{ font-family:var(--ff-display); font-size:19px; color:var(--gold-bright); letter-spacing:.02em; }
+
+  .tag-buy{
+    margin-top:2px;
+    width:100%;
+    padding:11px 0;
+    border-radius:8px;
+    background:transparent;
+    border:1.4px solid var(--gold);
+    color:var(--gold);
+    font-weight:700; font-size:12.5px; letter-spacing:.05em;
+    display:flex; align-items:center; justify-content:center; gap:7px;
+    transition:.25s var(--ease);
+  }
+  .tag-buy:hover{ background:var(--gold); color:#0a0a0a; }
+  .tag-buy:active{ transform:scale(.96); }
+  .tag-buy svg{ width:14px; height:14px; }
+
+  .sold-badge{
+    position:absolute; inset:0;
+    background:rgba(10,10,10,.72);
+    border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    z-index:3;
+  }
+  .sold-badge span{
+    border:1.5px solid var(--danger); color:var(--danger);
+    padding:5px 14px; font-family:var(--ff-display);
+    letter-spacing:.12em; font-size:13px; transform:rotate(-8deg);
+    border-radius:4px;
+  }
+
+  /* =========================================================
+     5. QUIÉNES SOMOS
+  ========================================================= */
+  #about .content{ padding:10px 24px 60px; max-width:560px; margin:0 auto; }
+  .about-hero{
+    display:flex; flex-direction:column; align-items:center; text-align:center;
+    gap:16px; padding:20px 0 30px;
+  }
+  .about-hero .ring{
+    width:74px; height:74px; border-radius:50%;
+    border:1px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--ff-display); font-size:26px; color:var(--gold);
+  }
+  .about-hero h2{ font-family:var(--ff-display); font-size:30px; letter-spacing:.05em; color:var(--white); }
+  .about-text{
+    font-size:15px; line-height:1.85; color:var(--gray);
+    background:var(--bg-panel); border:1px solid var(--line);
+    border-radius:var(--radius); padding:24px;
+  }
+  .about-values{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:22px; }
+  .val-item{
+    text-align:center; padding:16px 8px;
+    border:1px solid var(--line); border-radius:12px; background:var(--bg-panel);
+  }
+  .val-item .n{ font-family:var(--ff-display); font-size:22px; color:var(--gold); }
+  .val-item .l{ font-size:10.5px; color:var(--gray-dim); letter-spacing:.04em; margin-top:4px; text-transform:uppercase; }
+
+  /* =========================================================
+     6. REDES SOCIALES
+  ========================================================= */
+  #social .content{ padding:10px 20px 60px; max-width:520px; margin:0 auto; }
+  .social-list{ display:flex; flex-direction:column; gap:14px; margin-top:12px; }
+  .social-card{
+    display:flex; align-items:center; gap:16px;
+    padding:18px 20px;
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+    transition:.3s var(--ease);
+  }
+  .social-card:hover{ border-color:var(--gold-dim); transform:translateX(4px); }
+  .social-card:active{ transform:scale(.97); }
+  .social-ic{
+    width:46px; height:46px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--bg-panel-2); border:1px solid var(--line);
+    flex-shrink:0;
+  }
+  .social-ic svg{ width:22px; height:22px; fill:var(--gold); }
+  .social-txt{ flex:1; display:flex; flex-direction:column; gap:2px; }
+  .social-txt strong{ font-size:15px; }
+  .social-txt span{ font-size:12px; color:var(--gray-dim); }
+  .social-go{ color:var(--gold); font-size:17px; }
+
+  /* =========================================================
+     7. MODAL DE CONFIRMACIÓN DE COMPRA
+  ========================================================= */
+  #buyModal{
+    position:fixed; inset:0; z-index:200;
+    display:flex; align-items:flex-end; justify-content:center;
+    background:rgba(0,0,0,.6);
+    opacity:0; visibility:hidden;
+    transition:opacity .35s var(--ease), visibility .35s;
+  }
+  #buyModal.active{ opacity:1; visibility:visible; }
+  @media(min-width:640px){ #buyModal{ align-items:center; } }
+
+  .modal-sheet{
+    width:100%; max-width:420px;
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:20px 20px 0 0;
+    padding:26px 24px calc(26px + env(safe-area-inset-bottom));
+    transform:translateY(30px);
+    transition:transform .4s var(--ease);
+  }
+  @media(min-width:640px){ .modal-sheet{ border-radius:20px; transform:translateY(20px) scale(.96); } }
+  #buyModal.active .modal-sheet{ transform:translateY(0) scale(1); }
+
+  .modal-handle{ width:40px; height:4px; background:var(--line); border-radius:4px; margin:0 auto 18px; }
+  .modal-sheet h3{ font-family:var(--ff-display); font-size:22px; letter-spacing:.03em; margin-bottom:14px; }
+  .modal-row{ display:flex; justify-content:space-between; font-size:13.5px; padding:9px 0; border-bottom:1px solid var(--line); color:var(--gray); }
+  .modal-row b{ color:var(--white); font-weight:600; }
+  .modal-actions{ display:flex; gap:10px; margin-top:20px; }
+  .modal-actions button{
+    flex:1; padding:14px 0; border-radius:10px; font-weight:700; font-size:13.5px; letter-spacing:.03em;
+    transition:.25s var(--ease);
+  }
+  .btn-cancel{ background:transparent; border:1px solid var(--line); color:var(--gray); }
+  .btn-cancel:active{ background:var(--bg-panel-2); }
+  .btn-confirm{ background:var(--gold); color:#0a0a0a; display:flex; align-items:center; justify-content:center; gap:8px; }
+  .btn-confirm:active{ transform:scale(.96); }
+  .btn-confirm svg{ width:16px; height:16px; }
+
+  /* =========================================================
+     8. UTILIDADES
+  ========================================================= */
+  .fade-up{ animation:fadeUp .6s var(--ease) both; }
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(18px);} to{opacity:1; transform:translateY(0);} }
+
+  ::-webkit-scrollbar{ width:6px; }
+  ::-webkit-scrollbar-thumb{ background:var(--line); border-radius:6px; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001s !important; transition-duration:.001s !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<!-- ============================================================
+     PANTALLA 0 — SPLASH / VIDEO DE INTRODUCCIÓN
+     Reproducción automática, pantalla completa, sin controles,
+     sin botón de saltar. Al terminar (evento 'ended') se revela
+     el menú principal automáticamente.
+============================================================ -->
+<div id="splash" class="screen active">
+  <video
+    id="introVideo"
+    src="1000259922.mp4"
+    autoplay
+    muted
+    playsinline
+    webkit-playsinline
+    disablepictureinpicture
+    controlslist="nodownload noplaybackrate nofullscreen"
+    oncontextmenu="return false;"
+  ></video>
+  <div class="splash-logo">ÁLVARO STORE</div>
+</div>
+
+<!-- ============================================================
+     PANTALLA 1 — MENÚ PRINCIPAL
+============================================================ -->
+<div id="menu" class="screen">
+  <div class="menu-inner">
+    <div class="brand fade-up">
+      <div class="mark">A</div>
+      <h1>ÁLVARO<br>STORE</h1>
+      <span class="sub">Segunda mano · Primera calidad</span>
     </div>
-   </div>
-  </template>
-  <script src="/_sdk/7bc22c877bd41881.editing_sdk.js" integrity="sha512-w+loWc8iNWJjaxLkSer0H0nUl/sFG+bxZK8bymKEC6R482TTHgJnQyMAxBE+v2+MMFpBjnl1umrBRJ3vfqzFCA=="></script>
-  <script>
-        lucide.createIcons();
 
-        function showScreen(id) {
-            document.querySelectorAll('.screen').forEach(s => { s.classList.remove('visible'); s.classList.add('hidden'); });
-            const target = document.getElementById(id);
-            target.classList.remove('hidden');
-            target.classList.add('visible');
-            if (id === 'screen-tienda') lucide.createIcons();
-        }
+    <nav class="menu-nav">
+      <button class="menu-btn fade-up" style="animation-delay:.05s" onclick="goTo('shop')">
+        <span class="ic">🛍️</span>
+        <span class="txt"><strong>Ver tienda</strong><span>Explora el catálogo completo</span></span>
+        <span class="arrow">›</span>
+      </button>
+      <button class="menu-btn fade-up" style="animation-delay:.12s" onclick="goTo('about')">
+        <span class="ic">👤</span>
+        <span class="txt"><strong>Quiénes somos</strong><span>Conoce nuestra historia</span></span>
+        <span class="arrow">›</span>
+      </button>
+      <button class="menu-btn fade-up" style="animation-delay:.19s" onclick="goTo('social')">
+        <span class="ic">📱</span>
+        <span class="txt"><strong>Redes sociales</strong><span>Síguenos y únete a la comunidad</span></span>
+        <span class="arrow">›</span>
+      </button>
+    </nav>
 
-        // Products data
-        const products = [
-            { code: "A1", name: "Hoodie Negro Oversize", price: "C$450", img: "https://images.pexels.com/photos/28701960/pexels-photo-28701960.jpeg?auto=compress&cs=tinysrgb&w=800" },
-            { code: "A2", name: "Camiseta Blanca Oversize", price: "C$250", img: "https://images.pexels.com/photos/18301882/pexels-photo-18301882.jpeg?auto=compress&cs=tinysrgb&w=800" },
-            { code: "A3", name: "Cargo Pants Negro", price: "C$500", img: "https://images.pexels.com/photos/35043249/pexels-photo-35043249.jpeg?auto=compress&cs=tinysrgb&w=800" },
-            { code: "A4", name: "Chaqueta Denim Vintage", price: "C$550", img: "https://images.pexels.com/photos/10548744/pexels-photo-10548744.jpeg?auto=compress&cs=tinysrgb&w=800" },
-            { code: "A5", name: "Joggers Streetwear", price: "C$380", img: "https://images.pexels.com/photos/12738118/pexels-photo-12738118.jpeg?auto=compress&cs=tinysrgb&w=800" },
-            { code: "A6", name: "Graphic Tee Urban", price: "C$220", img: "https://images.pexels.com/photos/33424374/pexels-photo-33424374.jpeg?auto=compress&cs=tinysrgb&w=800" },
-            { code: "A7", name: "Bomber Jacket Negro", price: "C$600", img: "https://images.pexels.com/photos/19880680/pexels-photo-19880680.jpeg?auto=compress&cs=tinysrgb&w=800" },
-            { code: "A8", name: "Camisa Flannel Vintage", price: "C$320", img: "https://images.pexels.com/photos/11933967/pexels-photo-11933967.jpeg?auto=compress&cs=tinysrgb&w=800" },
-            { code: "A9", name: "Baggy Jeans Street", price: "C$420", img: "https://images.pexels.com/photos/35555695/pexels-photo-35555695.jpeg?auto=compress&cs=tinysrgb&w=800" },
-            { code: "A10", name: "Windbreaker Urban", price: "C$480", img: "https://images.pexels.com/photos/31009212/pexels-photo-31009212.jpeg?auto=compress&cs=tinysrgb&w=800" },
-            { code: "A11", name: "Gorra Snapback Negra", price: "C$180", img: "https://images.pexels.com/photos/21820217/pexels-photo-21820217.jpeg?auto=compress&cs=tinysrgb&w=800" },
-            { code: "A12", name: "Pantalón Corduroy Vintage", price: "C$350", img: "https://images.pexels.com/photos/10102410/pexels-photo-10102410.jpeg?auto=compress&cs=tinysrgb&w=800" }
-        ];
+    <p class="menu-foot fade-up" style="animation-delay:.26s">© 2026 ÁLVARO STORE — TODOS LOS DERECHOS RESERVADOS</p>
+  </div>
+</div>
 
-        const list = document.getElementById('product-list');
-        products.forEach(p => {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            card.innerHTML = `
-                <img src="${p.img}" alt="${p.name}" class="w-full aspect-[3/4] object-cover" loading="lazy">
-                <div class="p-4">
-                    <p class="text-xs text-gray-500 tracking-widest mb-1">${p.code}</p>
-                    <h3 class="font-bold text-white text-lg mb-1">${p.name}</h3>
-                    <p class="font-bold text-xl mb-3" style="color:#d4af37">${p.price}</p>
-                    <button onclick="buyProduct('${p.code}')" class="btn-premium w-full py-3 rounded-lg text-black font-bold text-sm">Comprar</button>
-                </div>
-            `;
-            list.appendChild(card);
-        });
+<!-- ============================================================
+     PANTALLA 2 — TIENDA / CATÁLOGO
+============================================================ -->
+<div id="shop" class="screen">
+  <div class="topbar">
+    <button class="back-btn" onclick="goTo('menu')">‹</button>
+    <span class="topbar-title">Tienda</span>
+  </div>
+  <div class="content">
+    <div class="shop-intro">
+      <p>Prendas de segunda mano seleccionadas a mano. Estado real, precio justo.</p>
+    </div>
+    <div class="filter-row" id="filterRow"></div>
+    <div class="grid" id="productGrid"></div>
+  </div>
+</div>
 
-        function buyProduct(code) {
-            const msg = encodeURIComponent(`Hola, quiero la prenda ${code}. ¿Está disponible?`);
-            window.open(`https://wa.me/50581329702?text=${msg}`, '_blank');
-        }
-    </script>
- </body>
-</html>
+<!-- ============================================================
+     PANTALLA 3 — QUIÉNES SOMOS
+============================================================ -->
+<div id="about" class="screen">
+  <div class="topbar">
+    <button class="back-btn" onclick="goTo('menu')">‹</button>
+    <span class="topbar-title">Quiénes somos</span>
+  </div>
+  <div class="content">
+    <div class="about-hero">
+      <div class="ring">A</div>
+      <h2>NUESTRA ESENCIA</h2>
+    </div>
+    <p class="about-text">
+      Somos un equipo de jóvenes que busca formar un negocio estable ofreciendo prendas de segunda mano
+      de excelente calidad. Nuestro objetivo es brindar productos accesibles, originales y en excelente
+      estado para todos nuestros clientes, ofreciendo una experiencia de compra sencilla, rápida y confiable.
+    </p>
+    <div class="about-values">
+      <div class="val-item"><div class="n">100%</div><div class="l">Calidad revisada</div></div>
+      <div class="val-item"><div class="n">24h</div><div class="l">R
